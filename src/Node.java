@@ -1,4 +1,8 @@
-
+/**
+ * 
+ * @author Brent Kersanske
+ *
+ */
 public class Node {
 	
 	private State state;
@@ -7,13 +11,14 @@ public class Node {
 	
 	private Action action;
 	
-	private int pathCost;
+	private double pathCost;
 	
 	/**
-	 * 
+	 * Constructor for a root node.
 	 */
-	public Node() {
-		
+	public Node(State state) {
+		this.state    = state;
+		this.pathCost = 0.0d;
 	}
 	
 	/**
@@ -23,9 +28,26 @@ public class Node {
 	 * @param action The action that was applied to the parent to generate the ndoe.
 	 */
 	public Node(State state, Node parent, Action action) {
-		this.state  = state;
-		this.parent = parent;
-		this.action = action;
+		this.state    = state;
+		this.parent   = parent;
+		this.action   = action;
+		this.pathCost = parent.getPathCost() + 1;
+	}
+	
+	public State getState() {
+		return state;
+	}
+
+	public Node getParent() {
+		return parent;
+	}
+
+	public Action getAction() {
+		return action;
+	}
+
+	public double getPathCost() {
+		return pathCost;
 	}
 
 	/**
@@ -39,4 +61,8 @@ public class Node {
 		Node childNode = new Node();
 	}
 
+	
+	public boolean isRootNode() {
+		return this.parent == null;
+	}
 }
