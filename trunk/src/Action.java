@@ -4,6 +4,9 @@
  * @author Brent Kersanske
  *
  */
-public interface Action {
-
+public abstract class Action {
+	
+	public Action() {
+		
+	}
 }

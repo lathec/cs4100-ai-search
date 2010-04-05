@@ -9,5 +9,9 @@ public class Problem {
 		return state.equals(goalState);
 	}
 	
+	public State getInitialState() {
+		return this.initialState;
+	}
+	
 }
  

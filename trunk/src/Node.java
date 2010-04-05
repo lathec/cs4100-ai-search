@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * 
  * @author Brent Kersanske
@@ -58,11 +61,29 @@ public class Node {
 	 * @return
 	 */
 	public Node generateChildNode(Problem problem, Node parent, Action action) {
-		Node childNode = new Node();
+		return null;
 	}
 
 	
 	public boolean isRootNode() {
 		return this.parent == null;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public List<Node> getNodePathFromRoot() {
+		
+		List<Node> pathFromRoot = new ArrayList<Node> ();
+		Node currentNode = this;
+		
+		while(!currentNode.isRootNode()) {
+			pathFromRoot.add(0, currentNode);
+			currentNode = currentNode.getParent();
+		}
+		
+		pathFromRoot.add(0, currentNode);
+		return pathFromRoot;
 	}
 }
