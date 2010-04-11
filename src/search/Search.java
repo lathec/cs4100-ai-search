@@ -1,8 +1,13 @@
+package search;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Queue;
+
+import problem.Action;
+import problem.Problem;
+import problem.State;
 
 /**
  * Abstract class for extension by various search algorithms.
@@ -12,7 +17,7 @@ import java.util.Queue;
  */
 public abstract class Search {
 
-	protected HashSet<Node> exploredNodes;
+	protected HashSet<State> exploredNodes;
 	
 	protected HashMap<State, Node> currentFrontierState;
 	
@@ -20,6 +25,12 @@ public abstract class Search {
 	
 	protected ArrayList<Node> addToFrontier;
 	
+	/**
+	 * 
+	 * @param problem
+	 * @param frontier
+	 * @return
+	 */
 	public List<Action> search(Problem problem, Queue<Node> frontier) {		
 		Node rootNode = new Node(problem.getInitialState());		
 		if(problem.isGoalState(rootNode.getState())) {
@@ -41,6 +52,11 @@ public abstract class Search {
 		return new ArrayList<Action> ();		
 	}
 	
+	/**
+	 * 
+	 * @param nodeList
+	 * @return
+	 */
 	private List<Action> retrieveActionsFromNodes(List<Node> nodeList) {
 		List<Action> actions = new ArrayList<Action>();
 		if(nodeList.size() == 1) {
@@ -53,6 +69,22 @@ public abstract class Search {
 			}
 		}
 		return actions;
+	}
+	
+	/**
+	 * 
+	 * @param node
+	 * @param problem
+	 * @return
+	 */
+	protected List<Node> expandNode(Node node, Problem problem) {
+		List<Node> childNodes = new ArrayList<Node> ();		
+		for(Action action : problem.retrieveAcceptableActionsFromState(node.getState())) {
+			State successorState = problem.retrieveResult(node.getState(), action);
+			double pathCost      = problem.retrievePathCost(node.getState(), action);
+			childNodes.add(new Node(successorState, node, action, pathCost));
+		}
+		return childNodes;
 	}
 	
 	protected abstract List<Node> retrieveResultingNodesToAddToFrontier(Node nodeToExpand, Problem problem);
