@@ -1,4 +1,7 @@
+package search;
 import java.util.List;
+
+import problem.Problem;
 
 
 public class BreadthFirstSearch extends Search{

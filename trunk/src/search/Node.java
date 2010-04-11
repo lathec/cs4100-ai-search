@@ -1,5 +1,10 @@
+package search;
 import java.util.ArrayList;
 import java.util.List;
+
+import problem.Action;
+import problem.Problem;
+import problem.State;
 
 /**
  * 
@@ -30,11 +35,11 @@ public class Node {
 	 * @param parent The node in the search tree that generated this node.
 	 * @param action The action that was applied to the parent to generate the ndoe.
 	 */
-	public Node(State state, Node parent, Action action) {
+	public Node(State state, Node parent, Action action, double pathCost) {
 		this.state    = state;
 		this.parent   = parent;
 		this.action   = action;
-		this.pathCost = parent.getPathCost() + 1;
+		this.pathCost = parent.getPathCost() + pathCost;
 	}
 	
 	public State getState() {
