@@ -6,9 +6,9 @@ import java.util.List;
 
 public abstract class Problem {
 
-	private State initialState;
+	protected State initialState;
 	
-	private State goalState;
+	protected State goalState;
 	
 	public boolean isGoalState(State state) {
 		return state.equals(goalState);
