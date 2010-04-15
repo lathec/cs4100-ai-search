@@ -91,4 +91,8 @@ public class Node {
 		pathFromRoot.add(0, currentNode);
 		return pathFromRoot;
 	}
+	
+	public String toString() {
+		return state.toString();
+	}
 }

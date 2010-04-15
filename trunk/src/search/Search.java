@@ -37,7 +37,6 @@ public abstract class Search {
 			return retrieveActionsFromNodes(rootNode.getNodePathFromRoot());
 		}
 		frontier.add(rootNode);
-		System.out.println("frontier is " + frontier.size());
 		while(!(frontier.isEmpty())) {
 			Node nodeToExpand = frontier.poll();
 			if(problem.isGoalState(nodeToExpand.getState())) {
@@ -79,15 +78,14 @@ public abstract class Search {
 	 * @return
 	 */
 	protected List<Node> expandNode(Node node, Problem problem) {
-		System.out.println("expanding node!");
 		List<Node> childNodes = new ArrayList<Node> ();	
 		for(Action action : problem.retrieveAcceptableActionsFromState(node.getState())) {
-			System.out.println("Acceptable action = " + action.toString());
 			State successorState = problem.retrieveResult(node.getState(), action);
 			double pathCost      = problem.retrievePathCost(node.getState(), action);
-			childNodes.add(new Node(successorState, node, action, pathCost));
+			Node childNode       = new Node(successorState, node, action, pathCost);
+			System.out.println("EXPANSION CREATED CHILD NODE = " + childNode.toString());
+			childNodes.add(childNode);
 		}
-		System.out.println(childNodes.size() + " nodes expanded");
 		return childNodes;
 	}
 	
