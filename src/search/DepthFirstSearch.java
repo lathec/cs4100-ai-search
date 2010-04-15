@@ -28,15 +28,10 @@ public class DepthFirstSearch extends Search {
 		this.exploredNodes.add(nodeToExpand.getState());
 		for(Node node : expandNode(nodeToExpand, problem)) {
 			Node frontierNode = this.currentFrontierState.get(node.getState());
-			if(notInFrontierOrExploredSet(frontierNode)) {
-				addToFrontier.add(frontierNode);
+			if((frontierNode == null) && (!this.exploredNodes.contains(node.getState()))) {
+				addToFrontier.add(node);
 			}
 		}
 		return this.addToFrontier;
 	}
-	
-	protected boolean notInFrontierOrExploredSet(Node node) {
-		return((node != null) && (!this.exploredNodes.contains(node.getState())));
-	}
-
 }
