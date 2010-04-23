@@ -7,6 +7,7 @@ import problem.Action;
 import problem.ActionsFunction;
 import problem.ResultFunction;
 import problem.State;
+import problem.StepCostFunction;
 import problem.misscann.MissCannState.Shore;
 
 /**
@@ -17,7 +18,8 @@ import problem.misscann.MissCannState.Shore;
 public class MissCannFunctionFactory {
 
 	private static ResultFunction RESULT_FUNCTION = null;
-	private static ActionsFunction ACTION_FUNCTION = null;
+	private static ActionsFunction ACTIONS_FUNCTION = null;
+	private static StepCostFunction STEP_COST_FUNCTION = null;
 	
 	public static ResultFunction getResultFunction() {
 		if(RESULT_FUNCTION == null) {
@@ -27,16 +29,22 @@ public class MissCannFunctionFactory {
 	}
 	
 	public static ActionsFunction getActionsFunction() {
-		if(ACTION_FUNCTION == null) {
-			ACTION_FUNCTION = new MissCannActionsFunction();
+		if(ACTIONS_FUNCTION == null) {
+			ACTIONS_FUNCTION = new MissCannActionsFunction();
 		}
-		return ACTION_FUNCTION;
+		return ACTIONS_FUNCTION;
+	}
+	
+	public static StepCostFunction getStepCostFunction() {
+		if(STEP_COST_FUNCTION == null) {
+			STEP_COST_FUNCTION = new MissCannStepCostFunction();
+		}
+		return STEP_COST_FUNCTION;
 	}
 	
 	/**
 	 * Result function for the missionaries and cannibals problem.
 	 * @author Brent Kersanske
-	 *
 	 */
 	private static class MissCannResultFunction implements ResultFunction {
 		public MissCannResultFunction() {			
@@ -103,5 +111,17 @@ public class MissCannFunctionFactory {
 			} 
 			return validActions;
 		}
+	}
+	
+	/**
+	 * The step cost function for the missionaries and cannibals problem.
+	 * @author Brent Kersanske
+	 */
+	private static class MissCannStepCostFunction implements StepCostFunction {
+
+		@Override
+		public double c(Object s, Action a, Object sPrime) {
+			return 1.0d;
+		}		
 	}
 }
