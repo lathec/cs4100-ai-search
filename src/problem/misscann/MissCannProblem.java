@@ -16,10 +16,11 @@ import search.Node;
 public class MissCannProblem extends Problem {
 		
 	public MissCannProblem(State initialState, State goalState) {
-		this.initialState    = initialState;
-		this.goalState       = goalState;
-		this.actionsFunction = MissCannFunctionFactory.getActionsFunction();
-		this.resultFunction  = MissCannFunctionFactory.getResultFunction();		
+		this.initialState     = initialState;
+		this.goalState        = goalState;
+		this.actionsFunction  = MissCannFunctionFactory.getActionsFunction();
+		this.resultFunction   = MissCannFunctionFactory.getResultFunction();		
+		this.stepCostFunction = MissCannFunctionFactory.getStepCostFunction();
 	}
 	
 	/**
@@ -57,5 +58,9 @@ public class MissCannProblem extends Problem {
 	@Override
 	public State retrieveResult(State state, Action action) {
 		return resultFunction.retrieveResult(state, action);
+	}
+	
+	public String toString() {
+		return "Missionaries and Cannibals Problem";
 	}
 }

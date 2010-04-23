@@ -1,26 +1,41 @@
 package problem;
 
-import java.util.LinkedList;
 import java.util.List;
 
+import problem.basiceightpuzzle.BasicEightProblem;
+import problem.basiceightpuzzle.BasicEightState;
 import problem.misscann.MissCannProblem;
 import problem.misscann.MissCannState;
 import problem.misscann.MissCannState.Shore;
 import search.DepthFirstSearch;
-import search.Node;
+import search.GraphSearch;
 
 public class ProblemRunner {
 
 	public static void main(String[] args) {
+		
 		MissCannState mAndCInitialState = new MissCannState(Shore.R, 0, 0, 3, 3);
 		MissCannState mAndCGoalState    = new MissCannState(Shore.L, 3, 3, 0, 0);
 		MissCannProblem missionariesAndCannibals = new MissCannProblem(mAndCInitialState, mAndCGoalState);
 		
+		BasicEightState beInitialState = new BasicEightState(0, 0);
+		BasicEightState beGoalState    = new BasicEightState(2, 2);
+		BasicEightProblem basicEightBoardPuzzle = new BasicEightProblem(beInitialState, beGoalState);
+		
 		DepthFirstSearch DFS = new DepthFirstSearch();
-		List<Action> actionsOfSearch = DFS.search(missionariesAndCannibals, new LinkedList<Node> ());
+		//runAndPrintSearch(DFS, basicEightBoardPuzzle);
+		runAndPrintSearch(DFS, missionariesAndCannibals);
+	}
+	
+	private static void runAndPrintSearch(GraphSearch searcher, Problem problem) {
+		List<Action> actionsOfSearch = searcher.search(problem);
+		System.out.println("Result of " + problem.toString());
+		System.out.println("\nInitial State " + problem.getInitialState().toString());
 		for(Action action : actionsOfSearch) {
-			System.out.println(action.toString());
-		}
+			System.out.println("1" + action.toString());
+		}		
+		System.out.println("\nGoal State" + problem.getGoalState());
+		
 		
 	}
 }
