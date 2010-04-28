@@ -23,7 +23,7 @@ public class ProblemRunner {
 		BasicEightProblem basicEightBoardPuzzle = new BasicEightProblem(beInitialState, beGoalState);
 		
 		DepthFirstSearch DFS = new DepthFirstSearch();
-		//runAndPrintSearch(DFS, basicEightBoardPuzzle);
+		runAndPrintSearch(DFS, basicEightBoardPuzzle);
 		runAndPrintSearch(DFS, missionariesAndCannibals);
 	}
 	
@@ -31,11 +31,10 @@ public class ProblemRunner {
 		List<Action> actionsOfSearch = searcher.search(problem);
 		System.out.println("Result of " + problem.toString());
 		System.out.println("\nInitial State " + problem.getInitialState().toString());
-		for(Action action : actionsOfSearch) {
-			System.out.println("1" + action.toString());
+		for(int i = 0; i < actionsOfSearch.size(); i++) {
+			Action action = actionsOfSearch.get(i);
+			System.out.println((i + 1) + " " + action.toString());
 		}		
 		System.out.println("\nGoal State" + problem.getGoalState());
-		
-		
 	}
 }
