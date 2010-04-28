@@ -4,6 +4,9 @@ import java.util.List;
 
 import problem.basiceightpuzzle.BasicEightProblem;
 import problem.basiceightpuzzle.BasicEightState;
+import problem.mapnavigation.MapNavigationProblem;
+import problem.mapnavigation.MapNavigationState;
+import problem.mapnavigation.MapNavigationState.RomanianCity;
 import problem.misscann.MissCannProblem;
 import problem.misscann.MissCannState;
 import problem.misscann.MissCannState.Shore;
@@ -14,17 +17,20 @@ public class ProblemRunner {
 
 	public static void main(String[] args) {
 		
-		MissCannState mAndCInitialState = new MissCannState(Shore.R, 0, 0, 3, 3);
-		MissCannState mAndCGoalState    = new MissCannState(Shore.L, 3, 3, 0, 0);
+		MissCannState mAndCInitialState          = new MissCannState(Shore.R, 0, 0, 3, 3);
+		MissCannState mAndCGoalState             = new MissCannState(Shore.L, 3, 3, 0, 0);
 		MissCannProblem missionariesAndCannibals = new MissCannProblem(mAndCInitialState, mAndCGoalState);
-		
-		BasicEightState beInitialState = new BasicEightState(0, 0);
-		BasicEightState beGoalState    = new BasicEightState(2, 2);
-		BasicEightProblem basicEightBoardPuzzle = new BasicEightProblem(beInitialState, beGoalState);
+		BasicEightState beInitialState           = new BasicEightState(0, 0);
+		BasicEightState beGoalState              = new BasicEightState(2, 2);
+		BasicEightProblem basicEightBoardPuzzle  = new BasicEightProblem(beInitialState, beGoalState);
+		MapNavigationState mnInitialState        = new MapNavigationState(RomanianCity.BUCHAREST, 0);
+		MapNavigationState mnGoalState           = new MapNavigationState(RomanianCity.ZERIND, -1);
+		MapNavigationProblem mapNavigation       = new MapNavigationProblem(mnInitialState, mnGoalState);
 		
 		DepthFirstSearch DFS = new DepthFirstSearch();
-		runAndPrintSearch(DFS, basicEightBoardPuzzle);
-		runAndPrintSearch(DFS, missionariesAndCannibals);
+		runAndPrintSearch(DFS, mapNavigation);
+		// runAndPrintSearch(DFS, basicEightBoardPuzzle);
+		// runAndPrintSearch(DFS, missionariesAndCannibals);
 	}
 	
 	private static void runAndPrintSearch(GraphSearch searcher, Problem problem) {

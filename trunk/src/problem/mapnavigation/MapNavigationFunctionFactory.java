@@ -1,5 +1,6 @@
 package problem.mapnavigation;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import problem.Action;
@@ -7,10 +8,12 @@ import problem.ActionsFunction;
 import problem.ResultFunction;
 import problem.State;
 import problem.StepCostFunction;
+import problem.mapnavigation.MapNavigationState.RomanianCity;
+import problem.mapnavigation.MapNavigationState.RomanianCity.Location;
 
 /**
  * 
- * @author Brent
+ * @author Brent Kersanske
  *
  */
 public class MapNavigationFunctionFactory {
@@ -55,8 +58,9 @@ public class MapNavigationFunctionFactory {
 		 */
 		@Override
 		public State retrieveResult(State state, Action action) {
-			// TODO Auto-generated method stub
-			return null;
+			MapNavigationState mnState = ((MapNavigationState)state);
+			MapNavigationAction mnAction = ((MapNavigationAction)action);
+			return new MapNavigationState(mnAction.getMoveTo(), mnState.getTotalDistanceTravelled() + mnAction.getDistanceTravelled());
 		}		
 	}
 	
@@ -74,9 +78,13 @@ public class MapNavigationFunctionFactory {
 		 * {@inheritDoc}
 		 */
 		@Override
-		public List<Action> retrieveValidActions(State s) {
-			// TODO Auto-generated method stub
-			return null;
+		public List<Action> retrieveValidActions(State state) {
+			MapNavigationState mnState = ((MapNavigationState)state);
+			List<Action> validActions = new ArrayList<Action> ();
+			for(Location connection : mnState.getCurrentLocation().getConnections()) {
+				validActions.add(new MapNavigationAction(mnState.getCurrentLocation(), RomanianCity.getCity(connection)));
+			}			
+			return validActions;
 		}		
 	}
 	
@@ -92,8 +100,7 @@ public class MapNavigationFunctionFactory {
 		
 		@Override
 		public double c(Object s, Action a, Object sPrime) {
-			// TODO Auto-generated method stub
-			return 0;
+			return 1.0d;
 		}
 		
 	}
