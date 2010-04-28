@@ -13,13 +13,26 @@ import problem.State;
 public class MapNavigationState implements State {
 	
 	private RomanianCity currentLocation;
+	private Integer totalDistanceTravelled;
 	
-	public MapNavigationState(RomanianCity currentLocation) {
-		this.currentLocation = currentLocation;
+	public MapNavigationState(RomanianCity currentLocation, int totalDistanceTravelled) {
+		this.currentLocation        = currentLocation;
+	    this.totalDistanceTravelled = totalDistanceTravelled;
 	}
 	
 	public RomanianCity getCurrentLocation() {
 		return this.currentLocation;
+	}
+	
+	public Integer getTotalDistanceTravelled() {
+		return this.totalDistanceTravelled;
+	}
+
+	public boolean equals(Object other) {
+		if(other instanceof MapNavigationState) {
+			return(((MapNavigationState)other).getCurrentLocation().equals(this.getCurrentLocation()));
+		}
+		return false;
 	}
 	
 	/**
@@ -29,23 +42,23 @@ public class MapNavigationState implements State {
 	 */
 	public static class RomanianCity {
 	
-		private static enum Location {ARAD_LOC, BUCHAREST_LOC, CRAIOVA_LOC, DOBRETA_LOC, FAGARAS_LOC, GIURGIU_LOC, LUGOJ_LOC, MEHADIA_LOC, ORADEA_LOC, PITESTI_LOC, RIMNICU_VILCEA_LOC, SIBIU_LOC, TIMISOARA_LOC, ZERIND_LOC};
+		public static enum Location {ARAD_LOC, BUCHAREST_LOC, CRAIOVA_LOC, DOBRETA_LOC, FAGARAS_LOC, GIURGIU_LOC, LUGOJ_LOC, MEHADIA_LOC, ORADEA_LOC, PITESTI_LOC, RIMNICU_VILCEA_LOC, SIBIU_LOC, TIMISOARA_LOC, ZERIND_LOC};
 		
 		/* Static maps of distances from one city to its road connected other cities. */
-		private static Map<Location, Integer> ARAD_CONNS_DISTS = new HashMap<Location, Integer> ();
-		private static Map<Location, Integer> BUCHAREST_CONNS_DISTS = new HashMap<Location, Integer> ();
-		private static Map<Location, Integer> CRAIOVA_CONNS_DISTS = new HashMap<Location, Integer> ();
-		private static Map<Location, Integer> DOBRETA_CONNS_DISTS = new HashMap<Location, Integer> ();
-		private static Map<Location, Integer> FAGARAS_CONNS_DISTS = new HashMap<Location, Integer> ();
-		private static Map<Location, Integer> GIURGIU_CONNS_DISTS = new HashMap<Location, Integer> ();
-		private static Map<Location, Integer> LUGOJ_CONNS_DISTS = new HashMap<Location, Integer> ();
-		private static Map<Location, Integer> MEHADIA_CONNS_DISTS = new HashMap<Location, Integer> ();
-		private static Map<Location, Integer> ORADEA_CONNS_DISTS = new HashMap<Location, Integer> ();
-		private static Map<Location, Integer> PITESTI_CONNS_DISTS = new HashMap<Location, Integer> ();
+		private static Map<Location, Integer> ARAD_CONNS_DISTS           = new HashMap<Location, Integer> ();
+		private static Map<Location, Integer> BUCHAREST_CONNS_DISTS      = new HashMap<Location, Integer> ();
+		private static Map<Location, Integer> CRAIOVA_CONNS_DISTS        = new HashMap<Location, Integer> ();
+		private static Map<Location, Integer> DOBRETA_CONNS_DISTS        = new HashMap<Location, Integer> ();
+		private static Map<Location, Integer> FAGARAS_CONNS_DISTS        = new HashMap<Location, Integer> ();
+		private static Map<Location, Integer> GIURGIU_CONNS_DISTS        = new HashMap<Location, Integer> ();
+		private static Map<Location, Integer> LUGOJ_CONNS_DISTS          = new HashMap<Location, Integer> ();
+		private static Map<Location, Integer> MEHADIA_CONNS_DISTS        = new HashMap<Location, Integer> ();
+		private static Map<Location, Integer> ORADEA_CONNS_DISTS         = new HashMap<Location, Integer> ();
+		private static Map<Location, Integer> PITESTI_CONNS_DISTS        = new HashMap<Location, Integer> ();
 		private static Map<Location, Integer> RIMNICU_VILCEA_CONNS_DISTS = new HashMap<Location, Integer> ();
-		private static Map<Location, Integer> SIBIU_CONNS_DISTS = new HashMap<Location, Integer> ();
-		private static Map<Location, Integer> TIMISOARA_CONNS_DISTS = new HashMap<Location, Integer> ();
-		private static Map<Location, Integer> ZERIND_CONNS_DISTS = new HashMap<Location, Integer> ();
+		private static Map<Location, Integer> SIBIU_CONNS_DISTS          = new HashMap<Location, Integer> ();
+		private static Map<Location, Integer> TIMISOARA_CONNS_DISTS      = new HashMap<Location, Integer> ();
+		private static Map<Location, Integer> ZERIND_CONNS_DISTS         = new HashMap<Location, Integer> ();
 		
 		/* Populate the list of city connection distances with pre-computed distances in km */
 		static {
@@ -100,7 +113,26 @@ public class MapNavigationState implements State {
 		public static RomanianCity SIBIU          = new RomanianCity(Location.SIBIU_LOC, SIBIU_CONNS_DISTS);
 		public static RomanianCity TIMISOARA      = new RomanianCity(Location.TIMISOARA_LOC, TIMISOARA_CONNS_DISTS);
 		public static RomanianCity ZERIND         = new RomanianCity(Location.ZERIND_LOC, ZERIND_CONNS_DISTS);
-				
+		
+		private static Map<Location, RomanianCity> cities = new HashMap<Location, RomanianCity> ();
+		
+		static {
+			cities.put(Location.ARAD_LOC, ARAD);
+			cities.put(Location.BUCHAREST_LOC, BUCHAREST);
+			cities.put(Location.CRAIOVA_LOC, CRAIOVA);
+			cities.put(Location.DOBRETA_LOC, DOBRETA);
+			cities.put(Location.FAGARAS_LOC, FAGARAS);
+			cities.put(Location.GIURGIU_LOC, GIURGIU);
+			cities.put(Location.LUGOJ_LOC, LUGOJ);
+			cities.put(Location.MEHADIA_LOC, MEHADIA);
+			cities.put(Location.ORADEA_LOC, ORADEA);
+			cities.put(Location.PITESTI_LOC, PITESTI);
+			cities.put(Location.RIMNICU_VILCEA_LOC, RIMNICU_VILCEA);
+			cities.put(Location.SIBIU_LOC, SIBIU);
+			cities.put(Location.TIMISOARA_LOC, TIMISOARA);
+			cities.put(Location.ZERIND_LOC, ZERIND);
+		}
+		
 		private Location location;
 		private Map<Location, Integer> connectionDistances;
 		
@@ -136,6 +168,17 @@ public class MapNavigationState implements State {
 			} else {
 				return -1;
 			}
+		}
+
+		public static RomanianCity getCity(Location location) {
+			return cities.get(location);
+		}
+		
+		public boolean equals(Object other) {
+			if(other instanceof RomanianCity) {
+				return (((RomanianCity)other).getLocationIdentifier().equals(this.getLocationIdentifier()));
+			}
+			return false;
 		}
 		
 		public String toString() {
