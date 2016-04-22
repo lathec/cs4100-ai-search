@@ -1,0 +1,1 @@
+Project built on top of the AIMA: A Modern Approach textbook. Includes classic search algorithms and common problem spaces as examples.
